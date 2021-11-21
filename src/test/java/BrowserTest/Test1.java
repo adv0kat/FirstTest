@@ -5,14 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 
-public class Task1 {
+public class Test1 {
 
     @Test
     public void firstTest() {
-        System.setProperty("Webdriver.chrome.driver", "path/to/chromedriver");
+        System.setProperty("Webdriver.chrome.driver", "path/to/tools");
         WebDriver driver = new ChromeDriver();
         driver.get("http://www.google.ru/");
-
         driver.quit();
     }
 

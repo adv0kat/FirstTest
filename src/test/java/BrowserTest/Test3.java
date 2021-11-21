@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class Task3 {
+public class Test3 {
 
     @Test
     public void loginTest() {
-        System.setProperty("Webdriver.chrome.driver", "path/to/chromedriver");
+        System.setProperty("Webdriver.chrome.driver", "path/to/tools");
         WebDriver driver = new ChromeDriver();
         driver.get("http://localhost/litecart/admin/");
 
