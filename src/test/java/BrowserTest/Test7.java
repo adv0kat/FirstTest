@@ -19,7 +19,7 @@ public class Test7 {
 
         driver.get("http://localhost/litecart/admin/");
 
-        loginLitecart(driver);
+        Login.loginLitecart(driver);
 
         List<WebElement> menuElements = driver.findElements(xpath("//ul[@id='box-apps-menu']/li"));
 
@@ -44,16 +44,16 @@ public class Test7 {
         driver.quit();
     }
 
-    void loginLitecart(WebDriver driver) {
-        WebElement loginInput = driver.findElement(xpath("//input[@name='username']"));
-        WebElement passwordInput = driver.findElement(xpath("//input[@name='password']"));
-        WebElement loginButton = driver.findElement(xpath("//button[@name='login']"));
-
-
-        loginInput.sendKeys("admin");
-        passwordInput.sendKeys("admin");
-        loginButton.click();
-    }
+//    void loginLitecart(WebDriver driver) {
+//        WebElement loginInput = driver.findElement(xpath("//input[@name='username']"));
+//        WebElement passwordInput = driver.findElement(xpath("//input[@name='password']"));
+//        WebElement loginButton = driver.findElement(xpath("//button[@name='login']"));
+//
+//
+//        loginInput.sendKeys("admin");
+//        passwordInput.sendKeys("admin");
+//        loginButton.click();
+//    }
 
 
     boolean areElementsPresent(WebDriver driver, String headerLocator) {
