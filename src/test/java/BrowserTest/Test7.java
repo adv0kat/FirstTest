@@ -41,21 +41,9 @@ public class Test7 {
                 }
             }
         }
+
         driver.quit();
     }
-
-//    void loginLitecart(WebDriver driver) {
-//        WebElement loginInput = driver.findElement(xpath("//input[@name='username']"));
-//        WebElement passwordInput = driver.findElement(xpath("//input[@name='password']"));
-//        WebElement loginButton = driver.findElement(xpath("//button[@name='login']"));
-//
-//
-//        loginInput.sendKeys("admin");
-//        passwordInput.sendKeys("admin");
-//        loginButton.click();
-//    }
-
-
     boolean areElementsPresent(WebDriver driver, String headerLocator) {
         return driver.findElements(By.xpath(headerLocator)).size() > 0;
 

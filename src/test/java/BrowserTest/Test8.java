@@ -15,7 +15,7 @@ public class Test8 {
 
     @Test
     public void stickerTest() {
-        System.setProperty("WebDriver.chromedriver", "path/to/chromedriver");
+        System.setProperty("WebDriver.chrome.driver", "path/to/chromedriver");
         WebDriver driver = new ChromeDriver();
 
         driver.get("http://localhost/litecart/en/");
@@ -25,6 +25,9 @@ public class Test8 {
             List<WebElement> stickers = product.findElements(By.xpath(".//div[contains(@class,'sticker')]"));
             assertEquals(1, stickers.size());
         }
+        driver.quit();
     }
+
 }
+
 
