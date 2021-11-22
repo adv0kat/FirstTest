@@ -14,7 +14,7 @@ import static org.openqa.selenium.By.xpath;
 public class Test7 {
     @Test
     public void PanelTest() {
-        System.setProperty("WebDriver.chromedriver", "path/to/chromedriver");
+        System.setProperty("WebDriver.chrome.driver", "path/to/chromedriver");
         WebDriver driver = new ChromeDriver();
 
         driver.get("http://localhost/litecart/admin/");

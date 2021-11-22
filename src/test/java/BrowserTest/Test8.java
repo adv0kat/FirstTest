@@ -15,7 +15,7 @@ public class Test8 {
 
     @Test
     public void stickerTest() {
-        System.setProperty("WebDriver.chrome.driver", "path/to/chromedriver");
+        System.setProperty("WebDriver.chrome.driver", "path/to/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         driver.get("http://localhost/litecart/en/");
