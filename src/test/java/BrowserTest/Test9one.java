@@ -14,6 +14,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class Test9one {
+    public static void compareNames(List<String> names) {
+        ArrayList<String> sortedNames = new ArrayList<>(names);
+        Collections.sort(sortedNames);
+        for (int i = 0; i < names.size(); i++) {
+            assertEquals(names.get(i), sortedNames.get(i));
+        }
+    }
+
     @Test
     public void countryTest() {
         System.setProperty("WebDriver.chrome.driver", "path/to/chromedriver.exe");
@@ -27,6 +35,7 @@ public class Test9one {
         List<WebElement> rowElementsList = driver.findElements(By.xpath(rowLocator));
         ArrayList<String> countries = new ArrayList<>();
         HashMap<String, Integer> countriesZones = new HashMap<>();
+        int a = rowElementsList.size();
         for (int i = 0; i < rowElementsList.size(); i++) {
             countries.add(rowElementsList.get(i).findElement(By.xpath(counryLocator)).getText());
             String zone = rowElementsList.get(i).findElement(By.xpath(zoneLocator)).getText();
@@ -36,7 +45,7 @@ public class Test9one {
             }
         }
 
-        compareCountries(countries);
+        compareNames(countries);
 
         for (String country : countriesZones.keySet()) {
             WebElement countryElement = driver.findElement(By.xpath("//a[text()[contains(.,'" + country + "')]]"));
@@ -49,19 +58,11 @@ public class Test9one {
                 zonesNames.add(zoneElement.getAttribute("value"));
             }
 
-            compareCountries(zonesNames);
+            compareNames(zonesNames);
             WebElement cancelButton = driver.findElement(By.xpath("// button[@name='cancel']"));
             cancelButton.click();
         }
         driver.quit();
-    }
-
-    public void compareCountries(List<String> countries) {
-        ArrayList<String> sortedCountries = new ArrayList<>(countries);
-        Collections.sort(sortedCountries);
-        for (int i = 0; i < countries.size(); i++) {
-            assertEquals(countries.get(i), sortedCountries.get(i));
-        }
     }
 }
 
