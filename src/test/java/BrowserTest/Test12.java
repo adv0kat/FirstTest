@@ -35,7 +35,7 @@ public class Test12 {
         WebElement categoriesCheckBox = driver.findElement(By.xpath("//*[@id='tab-general']/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td[1]/input"));
         categoriesCheckBox.click();
 
-        WebElement defaultCategory = driver.findElement(By.xpath("//*[@id=\"tab-general\"]/table/tbody/tr[5]/td/select/option[2]"));
+        WebElement defaultCategory = driver.findElement(By.xpath("//*[@id='tab-general']/table/tbody/tr[5]/td/select/option[2]"));
         defaultCategory.click();
 
         WebElement genderGroups= driver.findElement(By.xpath("//input[@value='1-3']"));
@@ -47,7 +47,7 @@ public class Test12 {
         quantityInput.sendKeys("500");
 
         WebElement uploadImagesInput = driver.findElement(By.xpath("//input[@type='file']"));
-        uploadImagesInput.sendKeys("");
+        uploadImagesInput.sendKeys("D:\\Загрузки браузера\\krolic.jpg");
 
 
         Thread.sleep(1000);
