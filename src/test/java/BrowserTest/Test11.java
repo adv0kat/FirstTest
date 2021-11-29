@@ -5,15 +5,20 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import java.time.LocalDateTime;
+
+import static BrowserTest.SetupDriver.driverNames;
+import static org.openqa.selenium.Keys.ENTER;
 
 public class Test11 {
     @Test
     public void runPageTest() {
         SetupDriver setupDriver = new SetupDriver();
-        regisration(setupDriver.getDriver("chrome"));
+        for (String driverName : driverNames) {
+            regisration(setupDriver.getDriver(driverName));
+        }
+//        regisration(setupDriver.getDriver("chrome"));
     }
 
     public void regisration(WebDriver driver) {
@@ -26,8 +31,8 @@ public class Test11 {
         WebElement addresOneInput = driver.findElement(By.xpath("//input[@name='address1']"));
         WebElement postCodeInput = driver.findElement(By.xpath("//input[@name='postcode']"));
         WebElement cityInput = driver.findElement(By.xpath("//input[@name='city']"));
-        WebElement countryInput = driver.findElement(By.xpath("//select[@name='country_code']"));
-        Select countrySelector = new Select(countryInput);
+        WebElement countryInput = driver.findElement(By.xpath("//select[@name='country_code']/../span[2]"));
+
         WebElement emailInput = driver.findElement(By.xpath("//input[@name='email']"));
         WebElement phoneInput = driver.findElement(By.xpath("//input[@name='phone']"));
         WebElement desiredPasswordInput = driver.findElement(By.xpath("//input[@name='password']"));
@@ -39,7 +44,12 @@ public class Test11 {
         addresOneInput.sendKeys("qwe");
         postCodeInput.sendKeys("52123");
         cityInput.sendKeys("ololo");
-        countrySelector.selectByVisibleText("United States");
+
+        countryInput.click();
+        WebElement countrySearch = driver.findElement(By.xpath("//input[@type='search']"));
+        countrySearch.sendKeys("United States");
+        countrySearch.sendKeys(ENTER);
+
         emailInput.sendKeys(email);
         phoneInput.sendKeys("1565253545");
         desiredPasswordInput.sendKeys(password);

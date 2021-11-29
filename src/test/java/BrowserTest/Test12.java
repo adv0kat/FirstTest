@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.File;
 
 
 public class Test12 {
@@ -38,16 +37,54 @@ public class Test12 {
         WebElement defaultCategory = driver.findElement(By.xpath("//*[@id='tab-general']/table/tbody/tr[5]/td/select/option[2]"));
         defaultCategory.click();
 
-        WebElement genderGroups= driver.findElement(By.xpath("//input[@value='1-3']"));
+        WebElement genderGroups = driver.findElement(By.xpath("//input[@value='1-3']"));
         genderGroups.click();
 
 
-        WebElement quantityInput= driver.findElement(By.xpath("//input[@name='quantity']"));
+        WebElement quantityInput = driver.findElement(By.xpath("//input[@name='quantity']"));
         quantityInput.clear();
         quantityInput.sendKeys("500");
 
-        WebElement uploadImagesInput = driver.findElement(By.xpath("//input[@type='file']"));
-        uploadImagesInput.sendKeys("D:\\Загрузки браузера\\krolic.jpg");
+//        WebElement uploadImagesInput = driver.findElement(By.xpath("//input[@type='file']"));
+//        uploadImagesInput.sendKeys("D:\\Загрузки браузера\\krolic.jpg");
+
+        WebElement dateFromInput = driver.findElement(By.xpath("//*[@id=\"tab-general\"]/table/tbody/tr[10]/td/input"));
+        dateFromInput.sendKeys("05052005");
+
+        WebElement dateToInput = driver.findElement(By.xpath("//*[@id=\"tab-general\"]/table/tbody/tr[11]/td/input"));
+        dateToInput.sendKeys("05062006");
+
+        WebElement informationPage = driver.findElement(By.xpath("//a[@href='#tab-information']"));
+        informationPage.click();
+
+        WebElement manufacturerInput = driver.findElement(By.xpath("//select[@name='manufacturer_id']/option[@value='1']"));
+        manufacturerInput.click();
+
+        WebElement keyWorsd = driver.findElement(By.xpath("//input[@name='keywords']"));
+        keyWorsd.sendKeys("sadasd");
+
+        WebElement shortDescription = driver.findElement(By.xpath("//input[@name='short_description[en]']"));
+        shortDescription.sendKeys("zxczxc");
+
+        WebElement descriptionInput = driver.findElement(By.xpath("//*[@class='trumbowyg-editor']"));
+        descriptionInput.sendKeys("opiojlkjlkmk");
+
+        WebElement headTitle = driver.findElement(By.xpath("//input[@name='head_title[en]']"));
+        headTitle.sendKeys("oikkok");
+
+        WebElement metaDescription = driver.findElement(By.xpath("//input[@name='meta_description[en]']"));
+        metaDescription.sendKeys("bvcb");
+
+
+        WebElement priceInput = driver.findElement(By.xpath("//a[@href='#tab-prices']"));
+        priceInput.click();
+
+        WebElement purchasePriceInput = driver.findElement(By.xpath("//input[@name='purchase_price']"));
+        purchasePriceInput.clear();
+        purchasePriceInput.sendKeys("200");
+
+        WebElement purchasePrice = driver.findElement(By.xpath("//select[@name='purchase_price_currency_code']//descendant::option[3]"));
+        purchasePrice.click();
 
 
         Thread.sleep(1000);
