@@ -12,6 +12,7 @@ public class Test12 {
     @Test
         public void productAddTest() throws InterruptedException {
 
+        String path = System.getProperty("user.dir");
 
         System.setProperty("Webdriver.chrome.driver", "path/to/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -45,8 +46,10 @@ public class Test12 {
         quantityInput.clear();
         quantityInput.sendKeys("500");
 
-//        WebElement uploadImagesInput = driver.findElement(By.xpath("//input[@type='file']"));
-//        uploadImagesInput.sendKeys("D:\\Загрузки браузера\\krolic.jpg");
+        WebElement uploadImagesInput = driver.findElement(By.xpath("//input[@type='file']"));
+        String imgpath = path + "/src/main/resources/img/krolic.jpg";
+        uploadImagesInput.sendKeys(imgpath);
+
 
         WebElement dateFromInput = driver.findElement(By.xpath("//*[@id=\"tab-general\"]/table/tbody/tr[10]/td/input"));
         dateFromInput.sendKeys("05052005");
