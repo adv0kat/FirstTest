@@ -10,9 +10,9 @@ import java.util.List;
 
 public class SetupDriver {
     public static List<String> driverNames = Arrays.asList(
-            "chrome");
-    // "firefox",
-    //"edge");
+            "chrome",
+            "firefox",
+            "edge");
 
     public WebDriver getDriver(String driverName) {
         String path = System.getProperty("user.dir");

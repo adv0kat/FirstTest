@@ -2,31 +2,36 @@ package BrowserTest;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import static BrowserTest.SetupDriver.driverNames;
+import static org.junit.Assert.assertTrue;
 
 
 public class Test12 {
 
     @Test
-//    public void runPageTest() throws InterruptedException {
-//        SetupDriver setupDriver = new SetupDriver();
-//        for (String driverName : driverNames) {
-//            productAddTest(setupDriver.getDriver(driverName));
-//        }
-//        regisration(setupDriver.getDriver("chrome"));
-//    }
+    public void runPageTest() {
+        SetupDriver setupDriver = new SetupDriver();
+        for (String driverName : driverNames) {
+            productAddTest(setupDriver.getDriver(driverName));
+        }
+        //productAddTest(setupDriver.getDriver("chrome"));
+    }
 
 
 //        driver.manage().timeouts().pageLoadTimeout(10000,TimeUnit.MILLISECONDS);
 
-    public void productAddTest() throws InterruptedException {
+    public void productAddTest(WebDriver driver) {
 
         String path = System.getProperty("user.dir");
+        String productName = generateName();
 
-        System.setProperty("Webdriver.chrome.driver", "path/to/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
         driver.get("http://localhost/litecart/admin/");
         Login.loginLitecart(driver);
 
@@ -36,14 +41,11 @@ public class Test12 {
         addProduct.click();
 
         WebElement nameInput = driver.findElement(By.xpath("//input[@name='name[en]']"));
-        nameInput.click();
-        nameInput.sendKeys("krolic");
+        nameInput.sendKeys(productName);
 
         WebElement codeInput = driver.findElement(By.xpath("//input[@name='code']"));
-        codeInput.click();
         codeInput.sendKeys("0123");
 
-        Thread.sleep(1000);
 
         WebElement categoriesCheckBox = driver.findElement(By.xpath("//*[@id='tab-general']/table/tbody/tr[4]/td/div/table/tbody/tr[2]/td[1]/input"));
         categoriesCheckBox.click();
@@ -59,18 +61,20 @@ public class Test12 {
         quantityInput.sendKeys("500");
 
         WebElement uploadImagesInput = driver.findElement(By.xpath("//input[@type='file']"));
-        String imgpath = path + "/src/main/resources/img/krolic.jpg";
+        String imgpath = path + "\\src\\main\\resources\\img\\krolic.jpg";
         uploadImagesInput.sendKeys(imgpath);
 
-        Thread.sleep(1000);
 
-        WebElement dateFromInput = driver.findElement(By.xpath("//*[@id=\"tab-general\"]/table/tbody/tr[10]/td/input"));
-        dateFromInput.sendKeys("05052005");
+        String dateFrom = "input[type=date][name=date_valid_from]";
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('value','2020-02-10')", driver.findElement(By.cssSelector(dateFrom)));
 
-        WebElement dateToInput = driver.findElement(By.xpath("//*[@id=\"tab-general\"]/table/tbody/tr[11]/td/input"));
-        dateToInput.sendKeys("05062006");
+        String dateTo = "input[type=date][name=date_valid_to]";
 
-        Thread.sleep(1000);
+        js.executeScript("arguments[0].setAttribute('value','2021-03-12')", driver.findElement(By.cssSelector(dateTo)));
+
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
 
         WebElement informationPage = driver.findElement(By.xpath("//a[@href='#tab-information']"));
         informationPage.click();
@@ -103,7 +107,28 @@ public class Test12 {
         WebElement purchasePrice = driver.findElement(By.xpath("//select[@name='purchase_price_currency_code']//descendant::option[3]"));
         purchasePrice.click();
 
-        Thread.sleep(1000);
+        WebElement priceUsd = driver.findElement(By.xpath("//input[@name='prices[USD]']"));
+        priceUsd.sendKeys("520");
+
+        WebElement prieceEur = driver.findElement(By.xpath("//input[@name='prices[EUR]']"));
+        prieceEur.sendKeys("100");
+
+        WebElement saveButton = driver.findElement(By.xpath("//button[@name='save']"));
+        saveButton.click();
+
+        WebElement lastProduct = driver.findElement(By.xpath("//a[text()='" + productName + "']"));
+        assertTrue(lastProduct.isDisplayed());
+
+        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+
         driver.quit();
     }
+
+    public String generateName() {
+        String time = LocalDateTime.now().toString();
+        time = time.replace(":", "").replace(".", "").replace("-", "");
+        return time;
+    }
+
 }
+
