@@ -6,16 +6,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.time.Duration;
+
 public class Test13 {
     @Test
 
-    public void productCartTest() throws InterruptedException {
+    public void productCartTest() {
         System.setProperty("Webdriver.chrome.driver", "path/to/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
 
-        // WebDriverWait wait = new WebDriverWait(driver, 30);
         driver.get("http://localhost/litecart/en/");
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
 
         WebElement firstDuck = driver.findElement(By.xpath("//*[@id='box-most-popular']/div/ul/li[1]/a[1]"));
         firstDuck.click();
@@ -56,7 +59,8 @@ public class Test13 {
         WebElement removeProduct2 = driver.findElement(By.xpath("//button[@name='remove_cart_item']"));
         removeProduct2.click();
 
-        Thread.sleep(1000);
+        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+
         driver.quit();
     }
 

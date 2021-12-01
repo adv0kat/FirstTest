@@ -76,6 +76,7 @@ public class Test12 {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
 
+
         WebElement informationPage = driver.findElement(By.xpath("//a[@href='#tab-information']"));
         informationPage.click();
 
