@@ -4,64 +4,85 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+
+import static BrowserTest.SetupDriver.driverNames;
 
 public class Test13 {
+
     @Test
+    public void runPageTest() {
+        SetupDriver setupDriver = new SetupDriver();
+        for (String driverName : driverNames) {
+            productCartTest(setupDriver.getDriver(driverName));
+        }
+        //productAddTest(setupDriver.getDriver("chrome"));
+    }
 
-    public void productCartTest() {
-        System.setProperty("Webdriver.chrome.driver", "path/to/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-
-
+    public void productCartTest(WebDriver driver) {
         driver.get("http://localhost/litecart/en/");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        for (int i = 0; i < 3; i++) {
 
-        WebElement firstDuck = driver.findElement(By.xpath("//*[@id='box-most-popular']/div/ul/li[1]/a[1]"));
-        firstDuck.click();
+            int qtyBeforeAdd = getQuantityFromCart(driver);
+            WebElement firstProduct = driver.findElement(By.xpath("//*[@id='box-most-popular']/div/ul/li[1]/a[1]"));
+            firstProduct.click();
 
-        WebElement addCart = driver.findElement(By.xpath("//button[@name='add_cart_product']"));
-        addCart.click();
+            selectSize(driver);
 
-        WebElement homePage = driver.findElement(By.xpath("//li[@class='general-0']"));
-        homePage.click();
+            WebElement addCart = driver.findElement(By.xpath("//button[@name='add_cart_product']"));
+            addCart.click();
 
-        WebElement firstProduct1 = driver.findElement(By.xpath("//*[@id='box-most-popular']/div/ul/li[1]/a[1]"));
-        firstProduct1.click();
-
-        WebElement addCart1 = driver.findElement(By.xpath("//button[@name='add_cart_product']"));
-        addCart1.click();
-
-        WebElement homePage1 = driver.findElement(By.xpath("//li[@class='general-0']"));
-        homePage1.click();
-
-        WebElement firstProduct2 = driver.findElement(By.xpath("//*[@id='box-most-popular']/div/ul/li[1]/a[1]"));
-        firstProduct2.click();
-
-        WebElement addCart2 = driver.findElement(By.xpath("//button[@name='add_cart_product']"));
-        addCart2.click();
-
-        WebElement homePage2 = driver.findElement(By.xpath("//li[@class='general-0']"));
-        homePage2.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            wait.until((ExpectedCondition<Boolean>) driver1 -> getQuantityFromCart(driver1) > qtyBeforeAdd);
+            WebElement homePage = driver.findElement(By.xpath("//li[@class='general-0']"));
+            homePage.click();
+        }
 
         WebElement checkoutCart = driver.findElement(By.xpath("//div[@id='cart']/a[3]"));
         checkoutCart.click();
 
-        WebElement removeProduct = driver.findElement(By.xpath("//button[@name='remove_cart_item']"));
-        removeProduct.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
 
-        WebElement removeProduct1 = driver.findElement(By.xpath("//button[@name='remove_cart_item']"));
-        removeProduct1.click();
+        List<WebElement> qtyList = driver.findElements(By.xpath("//td[@class='item']/../td[1]"));
 
-        WebElement removeProduct2 = driver.findElement(By.xpath("//button[@name='remove_cart_item']"));
-        removeProduct2.click();
+        for (int i = 0; i < qtyList.size(); i++) {
+            int qtyBeforeRemove = getQtySum(driver);
+            WebElement removeProduct = driver.findElement(By.xpath("//button[@name='remove_cart_item']"));
+            removeProduct.click();
 
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            wait.until((ExpectedCondition<Boolean>) driver12 -> getQtySum(driver12) < qtyBeforeRemove);
+        }
         driver.manage().timeouts().implicitlyWait(Duration.ZERO);
-
         driver.quit();
+    }
+
+    private int getQtySum(WebDriver driver) {
+        String qtyLocator = "//td[@class='item']/../td[1]";
+        List<WebElement> qtyList = driver.findElements(By.xpath(qtyLocator));
+        int qantity = 0;
+        for (WebElement qty : qtyList) {
+            qantity = qantity + Integer.parseInt(qty.getText());
+        }
+        return qantity;
+    }
+
+    private int getQuantityFromCart(WebDriver driver) {
+        String qtyLocator = "//span[@class='quantity']";
+        WebElement quantity = driver.findElement(By.xpath(qtyLocator));
+        return Integer.parseInt(quantity.getText());
+    }
+
+    private void selectSize(WebDriver driver) {
+        if (!driver.findElements(By.xpath("//select[@required='required']")).isEmpty()) {
+            WebElement selectSize = driver.findElement(By.xpath("//option[@value='Medium']"));
+            selectSize.click();
+        }
     }
 
 }
