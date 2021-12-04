@@ -16,16 +16,15 @@ import static BrowserTest.SetupDriver.driverNames;
 
 public class Test14 {
     @Test
-    public void runPageTest() throws InterruptedException {
+    public void runPageTest() {
         SetupDriver setupDriver = new SetupDriver();
         for (String driverName : driverNames) {
             checkCountries(setupDriver.getDriver(driverName));
         }
         //productAddTest(setupDriver.getDriver("chrome"));
     }
-    //*[@id="content"]//td[1]//a[2] для аддресформат
 
-    public void checkCountries(WebDriver driver) throws InterruptedException {
+    public void checkCountries(WebDriver driver) {
 
         driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
         Login.loginLitecart(driver);
