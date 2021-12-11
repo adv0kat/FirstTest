@@ -22,7 +22,6 @@ public class LiteCartApp {
         mainPage = new MainPage(driver);
         productPage = new ProductPage(driver);
         cartPage = new CartPage(driver);
-
     }
 
     public void setImplicitTimeout(int timeout) {
